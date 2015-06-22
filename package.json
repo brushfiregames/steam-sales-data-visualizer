@@ -1,0 +1,25 @@
+{
+  "name": "steam-sales-data-visualizer",
+  "version": "1.0.0",
+  "description": "A tool for easily viewing and exploring Steam sales data CSV files.",
+  "author": "Nick Gravelyn <nick@gravelyn.com>",
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nickgravelyn/steam-sales-data-visualizer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nickgravelyn/steam-sales-data-visualizer/issues"
+  },
+  "homepage": "https://github.com/nickgravelyn/steam-sales-data-visualizer",
+  "devDependencies": {
+    "bower": "^1.4.1",
+    "gulp": "^3.9.0"
+  },
+  "scripts": {
+    "bower-install": "node_modules/.bin/bower install",
+    "build": "node_modules/.bin/gulp build",
+    "watch": "node_modules/.bin/gulp watch"
+  }
+}

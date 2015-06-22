@@ -1,0 +1,20 @@
+{
+  "name": "steam-sales-data-visualizer",
+  "version": "1.0.0",
+  "authors": [
+    "Nick Gravelyn <nick@gravelyn.com>"
+  ],
+  "description": "A tool for easily viewing and exploring Steam sales data CSV files.",
+  "license": "MIT",
+  "homepage": "https://github.com/nickgravelyn/steam-sales-data-visualizer",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "metrics-graphics": "~2.5.0"
+  }
+}
