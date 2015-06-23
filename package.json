@@ -15,11 +15,16 @@
   "homepage": "https://github.com/nickgravelyn/steam-sales-data-visualizer",
   "devDependencies": {
     "bower": "^1.4.1",
-    "gulp": "^3.9.0"
+    "express": "^4.13.0",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.1.0",
+    "gulp-concat": "^2.5.2",
+    "gulp-jade": "^1.0.1",
+    "gulp-less": "^3.0.3"
   },
   "scripts": {
     "bower-install": "node_modules/.bin/bower install",
     "build": "node_modules/.bin/gulp build",
-    "watch": "node_modules/.bin/gulp watch"
+    "preview": "node_modules/.bin/gulp preview"
   }
 }

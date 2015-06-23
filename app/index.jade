@@ -1,0 +1,34 @@
+doctype html
+html
+  head
+    title Steam Sales Data Visualizer
+
+    link(rel='stylesheet', href='/style.css')
+    link(rel='stylesheet', href='/ext/metricsgraphics.css')
+
+    script(src='/ext/csv.js')
+    script(src='/ext/d3.min.js')
+    script(src='/ext/jquery.min.js')
+    script(src='/ext/metricsgraphics.min.js')
+    script(src='/app.js')
+
+  body
+    div.header
+      h1 Steam Sales Data Visualizer
+      p Submit your Steam sales data CSV file to generate graphics to help you visualize your sales.
+      p No data is submitted to any server; all logic happens in your web browser.
+
+    form
+      input.csvfile(type='file')
+      br
+      input(type='submit', value='Process')
+
+    div.content
+      div.downloads
+
+    div.footer
+      p Steam Sales Data Visualizer
+      p Created by <a href="http://nickgravelyn">Nick Gravelyn</a> of <a href="http://brushfiregames.com">Brushfire Games</a>
+      p Open source on <a href="https://github.com/nickgravelyn/steam-sales-data-visualizer">Github</a>.
+      a(href='http://brushfiregames.com')
+        img(src='http://brushfiregames.com/images/brushfire-logo-orange.png')
