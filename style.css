@@ -26,20 +26,69 @@ a:active img,
 a:hover img {
   border: 0;
 }
-.header {
-  margin-bottom: 1em;
-}
-.header p {
-  margin: 0;
-}
 .filedrop {
   padding: 1em;
-  max-width: 500px;
+  max-width: 550px;
   margin: 0 auto;
-  border: 1px dashed #AAA;
+  color: #999;
+  border: 1px dashed #999;
 }
 .filedrop.active {
   background: lightBlue;
+}
+.loadinganim {
+  display: none;
+  margin: 3em auto;
+  height: 20px;
+}
+.loadinganim div {
+  background-color: #249FC1;
+  height: 100%;
+  width: 6px;
+  display: inline-block;
+  -webkit-animation: stretchdelay 1.2s infinite ease-in-out;
+  animation: stretchdelay 1.2s infinite ease-in-out;
+}
+.loadinganim div:not(:last-child) {
+  margin-right: 3px;
+}
+.loadinganim .rect2 {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
+}
+.loadinganim .rect3 {
+  -webkit-animation-delay: -1s;
+  animation-delay: -1s;
+}
+.loadinganim .rect4 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+.loadinganim .rect5 {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+}
+@-webkit-keyframes stretchdelay {
+  0%,
+  40%,
+  100% {
+    -webkit-transform: scaleY(0.4);
+  }
+  20% {
+    -webkit-transform: scaleY(1);
+  }
+}
+@keyframes stretchdelay {
+  0%,
+  40%,
+  100% {
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
+  }
+  20% {
+    transform: scaleY(1);
+    -webkit-transform: scaleY(1);
+  }
 }
 .footer {
   margin-top: 5em;
