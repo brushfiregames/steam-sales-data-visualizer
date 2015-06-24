@@ -1,7 +1,7 @@
 body {
   font-family: sans-serif;
   font-size: 12pt;
-  width: 900px;
+  max-width: 900px;
   margin: 1em auto;
   background: #EEE;
   color: #555;
@@ -29,13 +29,19 @@ a, a:visited, a:active, a:hover {
   }
 }
 
-form {
-  text-align: center;
+.filedrop {
+  padding: 1em;
+  max-width: 500px;
+  margin: 0 auto;
+  border: 1px dashed #AAA;
+
+  &.active {
+    background: lightBlue;
+  }
 }
 
 .footer {
   margin-top: 5em;
-  text-align: center;
   font-size: 10pt;
   color: #AAA;
 

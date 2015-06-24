@@ -7,11 +7,12 @@ var concat = require('gulp-concat');
 var paths = {
   output: 'public',
   bower: [
-    'bower_components/csv-js/csv.js',
+    'bower_components/c3/c3.min.js',
+    'bower_components/c3/c3.min.css',
     'bower_components/d3/d3.min.js',
     'bower_components/jquery/dist/jquery.min.js',
-    'bower_components/metrics-graphics/dist/metricsgraphics.css',
-    'bower_components/metrics-graphics/dist/metricsgraphics.min.js'
+    'bower_components/papaparse/papaparse.min.js',
+    'bower_components/underscore/underscore-min.js'
   ],
   less: [ 'app/**/*.less' ],
   jade: [ 'app/**/*.jade' ],

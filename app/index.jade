@@ -4,12 +4,13 @@ html
     title Steam Sales Data Visualizer
 
     link(rel='stylesheet', href='/style.css')
-    link(rel='stylesheet', href='/ext/metricsgraphics.css')
+    link(rel='stylesheet', href='/ext/c3.min.css')
 
-    script(src='/ext/csv.js')
     script(src='/ext/d3.min.js')
+    script(src='/ext/c3.min.js')
     script(src='/ext/jquery.min.js')
-    script(src='/ext/metricsgraphics.min.js')
+    script(src='/ext/papaparse.min.js')
+    script(src='/ext/underscore-min.js')
     script(src='/app.js')
 
   body
@@ -18,13 +19,9 @@ html
       p Submit your Steam sales data CSV file to generate graphics to help you visualize your sales.
       p No data is submitted to any server; all logic happens in your web browser.
 
-    form
-      input.csvfile(type='file')
-      br
-      input(type='submit', value='Process')
+    div.filedrop Drop your CSV file here
 
-    div.content
-      div.downloads
+    div.graphics
 
     div.footer
       p Steam Sales Data Visualizer
