@@ -30,14 +30,18 @@ function makeRegionGraphics(data) {
   c3.generate({
     bindto: '#regionNetRevenuePie',
     data: { columns: revenueByRegion, type: 'pie' },
-    tooltip: { format: { value: (value, ratio, id) => { return d3.format('$,.2f')(value); } } }
+    tooltip: { format: { value: (value, ratio, id) => {
+      return d3.format('$,.2f')(value, ratio) + ' (' + d3.format('.1%')(ratio) + ')';
+    } } }
   });
 
   $('<div><h1>Units By Region</h1><div id="regionNetUnitsPie"></div></div>').appendTo('.graphics');
   c3.generate({
     bindto: '#regionNetUnitsPie',
     data: { columns: unitsByRegion, type: 'pie' },
-    tooltip: { format: { value: (value, ratio, id) => { return d3.format(',')(value); } } }
+    tooltip: { format: { value: (value, ratio, id) => {
+      return d3.format(',')(value) + ' (' + d3.format('.1%')(ratio) + ')';
+    } } }
   });
 }
 
