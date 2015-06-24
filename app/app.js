@@ -1,37 +1,28 @@
 function makeGraphics(data) {
-  $('<div><h1>Revenue By Date</h1><div id="revenueByDate"></div></div>').appendTo('.graphics');
-  let datesColumn = data.dates.slice(0);
-  datesColumn.unshift('x');
+  $('<div><h1>Revenue/Units By Date</h1><div id="revenueAndUnitsByDate"></div></div>').appendTo('.graphics');
+  let datesForC3 = data.dates.slice(0);
+  datesForC3.unshift('x');
   c3.generate({
-    bindto: '#revenueByDate',
+    bindto: '#revenueAndUnitsByDate',
     data: {
       x: 'x',
       columns: [
-        datesColumn,
-        data.revenueByDate
-      ]
-    },
-    axis: { x: { type: 'timeseries' } },
-    tooltip: { format: { value: (value) => {
-      return d3.format('$,.2f')(value);
-    } } }
-  });
-
-  $('<div><h1>Units By Date</h1><div id="unitsByDate"></div></div>').appendTo('.graphics');
-  let unitsColumn = data.dates.slice(0);
-  unitsColumn.unshift('x');
-  c3.generate({
-    bindto: '#unitsByDate',
-    data: {
-      x: 'x',
-      columns: [
-        unitsColumn,
+        datesForC3,
+        data.revenueByDate,
         data.unitsByDate
-      ]
+      ],
+      axes: {
+        Units: 'y2'
+      }
     },
-    axis: { x: { type: 'timeseries' } },
-    tooltip: { format: { value: (value) => {
-      return d3.format(',')(value);
+    axis: {
+      x: { type: 'timeseries' },
+      y: { tick: { format: d3.format('$,') } },
+      y2: { show: true, tick: { format: d3.format(',') } }
+    },
+    point: { show: false },
+    tooltip: { format: { value: (value, ratio, id) => {
+      return id === 'Revenue' ? d3.format('$,.2f')(value) : d3.format(',')(value);
     } } }
   });
 
