@@ -1,8 +1,17 @@
-// This file is rn as a web worker to process our CSV data into all of the values
+// This file is run as a web worker to process our CSV data into all of the values
 // we need to generate our graphics and run the page.
 
 importScripts('ext/moment-with-locales.min.js');
 importScripts('ext/underscore-min.js');
+
+function sumColumnWithMatch(csvData, columnToMatch, valueToMatch, columnToSum) {
+  return _.reduce(csvData, (result, row) => {
+    if (row[columnToMatch] === valueToMatch) {
+      result += row[columnToSum];
+    }
+    return result;
+  }, 0);
+}
 
 self.addEventListener('message', function(e) {
   let csvData = e.data;
@@ -13,26 +22,12 @@ self.addEventListener('message', function(e) {
 
   // Compute the revenue earned in each region
   result.revenueByRegion = _.map(result.regions, (region) => {
-    let revenue = _.reduce(csvData, (revenue, row) => {
-      if (row['Region'] === region) {
-        revenue += row['Net Steam Sales (USD)'];
-      }
-      return revenue;
-    }, 0);
-
-    return [region, revenue];
+    return [region, sumColumnWithMatch(csvData, 'Region', region, 'Net Steam Sales (USD)')];
   });
 
   // Compute the net units sold in each region
   result.unitsByRegion = _.map(result.regions, (region) => {
-    let revenue = _.reduce(csvData, (revenue, row) => {
-      if (row['Region'] === region) {
-        revenue += row['Net Units Sold'];
-      }
-      return revenue;
-    }, 0);
-
-    return [region, revenue];
+    return [region, sumColumnWithMatch(csvData, 'Region', region, 'Net Units Sold')];
   });
 
   // Grab all dates from the file
@@ -41,6 +36,23 @@ self.addEventListener('message', function(e) {
   // Find the min and max dates
   result.minDate = moment.min(result.dates);
   result.maxDate = moment.max(result.dates);
+
+  // Convert all dates into simple formats like the CSV file
+  result.dates = _.map(result.dates, (date) => date.format('YYYY-MM-DD'));
+  result.minDate = result.minDate.format('YYYY-MM-DD');
+  result.maxDate = result.maxDate.format('YYYY-MM-DD');
+
+  // Create data that gives us the revenue earned on each date
+  result.revenueByDate = _.map(result.dates, (date) => {
+    return sumColumnWithMatch(csvData, 'Date', date, 'Net Steam Sales (USD)');
+  });
+  result.revenueByDate.unshift('Revenue');
+
+  // Create data that gives us the net units on each date
+  result.unitsByDate = _.map(result.dates, (date) => {
+    return sumColumnWithMatch(csvData, 'Date', date, 'Net Units Sold');
+  });
+  result.unitsByDate.unshift('Units');
 
   // Post message back to the app now that we're done
   self.postMessage(JSON.stringify(result));

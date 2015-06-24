@@ -1,17 +1,59 @@
 function makeGraphics(data) {
-  $('<div><h1>Revenue By Region</h1><div id="regionNetRevenuePie"></div></div>').appendTo('.graphics');
+  $('<div><h1>Revenue By Date</h1><div id="revenueByDate"></div></div>').appendTo('.graphics');
+  let datesColumn = data.dates.slice(0);
+  datesColumn.unshift('x');
   c3.generate({
-    bindto: '#regionNetRevenuePie',
-    data: { columns: data.revenueByRegion, type: 'pie' },
+    bindto: '#revenueByDate',
+    data: {
+      x: 'x',
+      columns: [
+        datesColumn,
+        data.revenueByDate
+      ]
+    },
+    axis: { x: { type: 'timeseries' } },
+    tooltip: { format: { value: (value) => {
+      return d3.format('$,.2f')(value);
+    } } }
+  });
+
+  $('<div><h1>Units By Date</h1><div id="unitsByDate"></div></div>').appendTo('.graphics');
+  let unitsColumn = data.dates.slice(0);
+  unitsColumn.unshift('x');
+  c3.generate({
+    bindto: '#unitsByDate',
+    data: {
+      x: 'x',
+      columns: [
+        unitsColumn,
+        data.unitsByDate
+      ]
+    },
+    axis: { x: { type: 'timeseries' } },
+    tooltip: { format: { value: (value) => {
+      return d3.format(',')(value);
+    } } }
+  });
+
+  $('<div><h1>Revenue By Region</h1><div id="revenueByRegion"></div></div>').appendTo('.graphics');
+  c3.generate({
+    bindto: '#revenueByRegion',
+    data: {
+      columns: data.revenueByRegion,
+      type: 'pie'
+    },
     tooltip: { format: { value: (value, ratio, id) => {
       return d3.format('$,.2f')(value, ratio) + ' (' + d3.format('.1%')(ratio) + ')';
     } } }
   });
 
-  $('<div><h1>Units By Region</h1><div id="regionNetUnitsPie"></div></div>').appendTo('.graphics');
+  $('<div><h1>Units By Region</h1><div id="unitsByRegion"></div></div>').appendTo('.graphics');
   c3.generate({
-    bindto: '#regionNetUnitsPie',
-    data: { columns: data.unitsByRegion, type: 'pie' },
+    bindto: '#unitsByRegion',
+    data: {
+      columns: data.unitsByRegion,
+      type: 'pie'
+    },
     tooltip: { format: { value: (value, ratio, id) => {
       return d3.format(',')(value) + ' (' + d3.format('.1%')(ratio) + ')';
     } } }
@@ -46,7 +88,6 @@ function processFile(file) {
         // Listen for the message to come back to make our graphics
         worker.addEventListener('message', (e) => {
           let data = JSON.parse(e.data);
-          console.log(data);
           makeGraphics(data);
           $('.loadinganim').hide();
         }, false);
