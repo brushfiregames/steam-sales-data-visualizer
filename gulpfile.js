@@ -3,6 +3,7 @@ var less = require('gulp-less');
 var jade = require('gulp-jade');
 var babel = require('gulp-babel');
 var concat = require('gulp-concat');
+var livereload = require('gulp-livereload');
 
 var paths = {
   output: 'public',
@@ -21,21 +22,24 @@ var paths = {
 
 function copyBower() {
   gulp.src(paths.bower)
-      .pipe(gulp.dest(paths.output + '/ext'));
+      .pipe(gulp.dest(paths.output + '/ext'))
+      .pipe(livereload());
 }
 gulp.task('copy-bower', copyBower);
 
 function buildLess() {
   gulp.src(paths.less)
       .pipe(less())
-      .pipe(gulp.dest(paths.output));
+      .pipe(gulp.dest(paths.output))
+      .pipe(livereload());
 }
 gulp.task('build-less', buildLess);
 
 function buildJade() {
   gulp.src(paths.jade)
       .pipe(jade())
-      .pipe(gulp.dest(paths.output));
+      .pipe(gulp.dest(paths.output))
+      .pipe(livereload());
 }
 gulp.task('build-jade', buildJade);
 
@@ -43,7 +47,8 @@ function buildScript() {
   gulp.src(paths.script)
       .pipe(babel())
       .pipe(concat('app.js'))
-      .pipe(gulp.dest(paths.output));
+      .pipe(gulp.dest(paths.output))
+      .pipe(livereload());
 }
 gulp.task('build-script', buildScript);
 
@@ -52,11 +57,13 @@ gulp.task('build', ['copy-bower', 'build-less', 'build-jade', 'build-script']);
 gulp.task('server', function() {
   var express = require('express');
   var app = express();
+  app.use(require('connect-livereload')());
   app.use(express.static(__dirname + '/' + paths.output));
   app.listen(3000);
 });
 
 gulp.task('preview', ['build', 'server'], function() {
+  livereload.listen();
   gulp.watch(paths.bower_components, ['copy-bower']);
   gulp.watch(paths.less, ['build-less']);
   gulp.watch(paths.jade, ['build-jade']);
