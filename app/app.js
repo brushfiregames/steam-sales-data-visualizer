@@ -1,35 +1,8 @@
-function makeRegionGraphics(data) {
-  // Get a unique list of the regions in which the game has sold
-  let regions = _.uniq(_.map(data, (row) => { return row['Region']; })).sort();
-
-  // Count up some data based on those regions
-  let revenueByRegion = _.map(regions, (region) => {
-    let revenue = _.reduce(data, (revenue, row) => {
-      if (row['Region'] === region) {
-        revenue += row['Net Steam Sales (USD)'];
-      }
-      return revenue;
-    }, 0);
-
-    return [region, revenue];
-  });
-
-  let unitsByRegion = _.map(regions, (region) => {
-    let revenue = _.reduce(data, (revenue, row) => {
-      if (row['Region'] === region) {
-        revenue += row['Net Units Sold'];
-      }
-      return revenue;
-    }, 0);
-
-    return [region, revenue];
-  });
-
-  // Create some graphics from the region data
+function makeGraphics(data) {
   $('<div><h1>Revenue By Region</h1><div id="regionNetRevenuePie"></div></div>').appendTo('.graphics');
   c3.generate({
     bindto: '#regionNetRevenuePie',
-    data: { columns: revenueByRegion, type: 'pie' },
+    data: { columns: data.revenueByRegion, type: 'pie' },
     tooltip: { format: { value: (value, ratio, id) => {
       return d3.format('$,.2f')(value, ratio) + ' (' + d3.format('.1%')(ratio) + ')';
     } } }
@@ -38,22 +11,17 @@ function makeRegionGraphics(data) {
   $('<div><h1>Units By Region</h1><div id="regionNetUnitsPie"></div></div>').appendTo('.graphics');
   c3.generate({
     bindto: '#regionNetUnitsPie',
-    data: { columns: unitsByRegion, type: 'pie' },
+    data: { columns: data.unitsByRegion, type: 'pie' },
     tooltip: { format: { value: (value, ratio, id) => {
       return d3.format(',')(value) + ' (' + d3.format('.1%')(ratio) + ')';
     } } }
   });
 }
 
-function makeGraphics(data) {
+function processFile(file) {
   // Clear any previous graphics
   $('.graphics').html('');
 
-  // Now render out our various graphics
-  makeRegionGraphics(data);
-}
-
-function processFile(file) {
   let reader = new FileReader();
 
   // Called when the FileReader completes the file read
@@ -65,17 +33,32 @@ function processFile(file) {
     // everything before that out of the data.
     csvData = csvData.substring(csvData.indexOf('Date'));
 
-    // Parse the data into objects
+    // Parse the CSV data
     Papa.parse(csvData, {
       header: true,
       dynamicTyping: true,
       worker: true,
       skipEmptyLines: true,
-      complete: (results) => { makeGraphics(results.data); }
+      complete: (results) => {
+        // Create a worker thread to process the data
+        let worker = new Worker('processor.js');
+
+        // Listen for the message to come back to make our graphics
+        worker.addEventListener('message', (e) => {
+          let data = JSON.parse(e.data);
+          console.log(data);
+          makeGraphics(data);
+          $('.loadinganim').hide();
+        }, false);
+
+        // Start the loading process
+        worker.postMessage(results.data);
+      }
     });
   };
 
   // Start the file read
+  $('.loadinganim').show();
   reader.readAsBinaryString(file);
 }
 

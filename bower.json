@@ -18,6 +18,7 @@
     "metrics-graphics": "~2.5.0",
     "papaparse": "~4.1.1",
     "underscore": "~1.8.3",
-    "c3": "~0.4.10"
+    "c3": "~0.4.10",
+    "moment": "~2.10.3"
   }
 }

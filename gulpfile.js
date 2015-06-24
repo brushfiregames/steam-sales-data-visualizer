@@ -2,7 +2,6 @@ var gulp = require('gulp');
 var less = require('gulp-less');
 var jade = require('gulp-jade');
 var babel = require('gulp-babel');
-var concat = require('gulp-concat');
 var livereload = require('gulp-livereload');
 
 var paths = {
@@ -12,6 +11,7 @@ var paths = {
     'bower_components/c3/c3.min.css',
     'bower_components/d3/d3.min.js',
     'bower_components/jquery/dist/jquery.min.js',
+    'bower_components/moment/min/moment-with-locales.min.js',
     'bower_components/papaparse/papaparse.min.js',
     'bower_components/underscore/underscore-min.js'
   ],
@@ -46,7 +46,6 @@ gulp.task('build-jade', buildJade);
 function buildScript() {
   gulp.src(paths.script)
       .pipe(babel())
-      .pipe(concat('app.js'))
       .pipe(gulp.dest(paths.output))
       .pipe(livereload());
 }
