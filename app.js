@@ -1,33 +1,26 @@
 'use strict';
 
 function makeGraphics(data) {
-  $('<div><h1>Revenue By Date</h1><div id="revenueByDate"></div></div>').appendTo('.graphics');
-  var datesColumn = data.dates.slice(0);
-  datesColumn.unshift('x');
+  $('<div><h1>Revenue/Units By Date</h1><div id="revenueAndUnitsByDate"></div></div>').appendTo('.graphics');
+  var datesForC3 = data.dates.slice(0);
+  datesForC3.unshift('x');
   c3.generate({
-    bindto: '#revenueByDate',
+    bindto: '#revenueAndUnitsByDate',
     data: {
       x: 'x',
-      columns: [datesColumn, data.revenueByDate]
+      columns: [datesForC3, data.revenueByDate, data.unitsByDate],
+      axes: {
+        Units: 'y2'
+      }
     },
-    axis: { x: { type: 'timeseries' } },
-    tooltip: { format: { value: function value(_value) {
-          return d3.format('$,.2f')(_value);
-        } } }
-  });
-
-  $('<div><h1>Units By Date</h1><div id="unitsByDate"></div></div>').appendTo('.graphics');
-  var unitsColumn = data.dates.slice(0);
-  unitsColumn.unshift('x');
-  c3.generate({
-    bindto: '#unitsByDate',
-    data: {
-      x: 'x',
-      columns: [unitsColumn, data.unitsByDate]
+    axis: {
+      x: { type: 'timeseries' },
+      y: { tick: { format: d3.format('$,') } },
+      y2: { show: true, tick: { format: d3.format(',') } }
     },
-    axis: { x: { type: 'timeseries' } },
-    tooltip: { format: { value: function value(_value2) {
-          return d3.format(',')(_value2);
+    point: { show: false },
+    tooltip: { format: { value: function value(_value, ratio, id) {
+          return id === 'Revenue' ? d3.format('$,.2f')(_value) : d3.format(',')(_value);
         } } }
   });
 
@@ -38,8 +31,8 @@ function makeGraphics(data) {
       columns: data.revenueByRegion,
       type: 'pie'
     },
-    tooltip: { format: { value: function value(_value3, ratio, id) {
-          return d3.format('$,.2f')(_value3, ratio) + ' (' + d3.format('.1%')(ratio) + ')';
+    tooltip: { format: { value: function value(_value2, ratio, id) {
+          return d3.format('$,.2f')(_value2, ratio) + ' (' + d3.format('.1%')(ratio) + ')';
         } } }
   });
 
@@ -50,8 +43,8 @@ function makeGraphics(data) {
       columns: data.unitsByRegion,
       type: 'pie'
     },
-    tooltip: { format: { value: function value(_value4, ratio, id) {
-          return d3.format(',')(_value4) + ' (' + d3.format('.1%')(ratio) + ')';
+    tooltip: { format: { value: function value(_value3, ratio, id) {
+          return d3.format(',')(_value3) + ' (' + d3.format('.1%')(ratio) + ')';
         } } }
   });
 }
