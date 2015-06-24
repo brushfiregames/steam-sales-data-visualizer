@@ -25,6 +25,7 @@
   "scripts": {
     "bower-install": "node_modules/.bin/bower install",
     "build": "node_modules/.bin/gulp build",
-    "preview": "node_modules/.bin/gulp preview"
+    "preview": "node_modules/.bin/gulp preview",
+    "deploy": "node deploy.js"
   }
 }

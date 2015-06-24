@@ -18,3 +18,8 @@ Run `npm run build` to build the site into the `public` directory.
 ## Developing
 
 Run `npm run preview` to build the site, setup watchers to automatically rebuild on changes, and run a local Express server to preview the site at [http://localhost:3000](http://localhost:3000).
+
+
+## Deploying
+
+Run `npm run deploy` to build the site and deploy it to the `gh-pages` branch of the current repository.

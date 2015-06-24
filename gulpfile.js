@@ -19,29 +19,33 @@ var paths = {
   script: [ 'app/**/*.js' ]
 }
 
-gulp.task('copy-bower', function() {
+function copyBower() {
   gulp.src(paths.bower)
       .pipe(gulp.dest(paths.output + '/ext'));
-});
+}
+gulp.task('copy-bower', copyBower);
 
-gulp.task('build-less', function() {
+function buildLess() {
   gulp.src(paths.less)
       .pipe(less())
       .pipe(gulp.dest(paths.output));
-});
+}
+gulp.task('build-less', buildLess);
 
-gulp.task('build-jade', function() {
+function buildJade() {
   gulp.src(paths.jade)
       .pipe(jade())
       .pipe(gulp.dest(paths.output));
-});
+}
+gulp.task('build-jade', buildJade);
 
-gulp.task('build-script', function() {
+function buildScript() {
   gulp.src(paths.script)
       .pipe(babel())
       .pipe(concat('app.js'))
       .pipe(gulp.dest(paths.output));
-});
+}
+gulp.task('build-script', buildScript);
 
 gulp.task('build', ['copy-bower', 'build-less', 'build-jade', 'build-script']);
 
@@ -60,3 +64,12 @@ gulp.task('preview', ['build', 'server'], function() {
 });
 
 gulp.task('default', ['build']);
+
+// Deploy changes the output directory and manually runs each of our build functions
+gulp.task('deploy', function() {
+  paths.output = 'deploy';
+  copyBower();
+  buildLess();
+  buildJade();
+  buildScript();
+});
