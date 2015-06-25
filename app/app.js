@@ -49,6 +49,34 @@ function makeGraphics(data) {
       return d3.format(',')(value) + ' (' + d3.format('.1%')(ratio) + ')';
     } } }
   });
+
+  $('<div><h1>Revenue By Country (top 15)</h1><div id="revenueByCountry"></div></div>').appendTo('.graphics');
+  // Only use the top 15 countries by revenue
+  let revenueByCountry = _.sortBy(_.sortBy(data.revenueByCountry, r => -r[1]).slice(0, 15), r => r[0]);
+  c3.generate({
+    bindto: '#revenueByCountry',
+    data: {
+      columns: revenueByCountry,
+      type: 'pie'
+    },
+    tooltip: { format: { value: (value, ratio, id) => {
+      return d3.format('$,.2f')(value, ratio) + ' (' + d3.format('.1%')(ratio) + ')';
+    } } }
+  });
+
+  $('<div><h1>Units By Country (top 15)</h1><div id="unitsByCountry"></div></div>').appendTo('.graphics');
+  // Only use the top 15 countries by units
+  let unitsByCountry = _.sortBy(_.sortBy(data.unitsByCountry, r => -r[1]).slice(0, 15), r => r[0]);
+  c3.generate({
+    bindto: '#unitsByCountry',
+    data: {
+      columns: unitsByCountry,
+      type: 'pie'
+    },
+    tooltip: { format: { value: (value, ratio, id) => {
+      return d3.format(',')(value) + ' (' + d3.format('.1%')(ratio) + ')';
+    } } }
+  });
 }
 
 function processFile(file) {
