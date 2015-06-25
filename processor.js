@@ -19,19 +19,28 @@ self.addEventListener('message', function (e) {
   var csvData = e.data;
   var result = {};
 
-  // Process the list of all regions in which the game sold
+  // Process the list of all regions and countries in which the game sold
   result.regions = _.uniq(_.map(csvData, function (row) {
     return row['Region'];
   })).sort();
+  result.countries = _.uniq(_.map(csvData, function (row) {
+    return row['Country'];
+  })).sort();
 
-  // Compute the revenue earned in each region
+  // Compute revenue and units by region
   result.revenueByRegion = _.map(result.regions, function (region) {
     return [region, sumColumnWithMatch(csvData, 'Region', region, 'Net Steam Sales (USD)')];
   });
-
-  // Compute the net units sold in each region
   result.unitsByRegion = _.map(result.regions, function (region) {
     return [region, sumColumnWithMatch(csvData, 'Region', region, 'Net Units Sold')];
+  });
+
+  // Compute revenue and units by country
+  result.revenueByCountry = _.map(result.countries, function (country) {
+    return [country, sumColumnWithMatch(csvData, 'Country', country, 'Net Steam Sales (USD)')];
+  });
+  result.unitsByCountry = _.map(result.countries, function (country) {
+    return [country, sumColumnWithMatch(csvData, 'Country', country, 'Net Units Sold')];
   });
 
   // Grab all dates from the file
