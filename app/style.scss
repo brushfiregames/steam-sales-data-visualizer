@@ -1,23 +1,23 @@
+@import 'normalize.css';
+
 body {
-  font-family: sans-serif;
-  font-size: 12pt;
-  margin: 1em auto;
-  background: #eee;
-  color: #555;
   text-align: center;
+}
+
+header {
+  h1 {
+    margin-bottom: 0;
+  }
+
+  p {
+    margin: 0.5em;
+  }
 }
 
 a,
 a:visited,
 a:active,
 a:hover {
-  color: #249fc1;
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
-
   img {
     border: 0;
   }
@@ -26,8 +26,7 @@ a:hover {
 .filedrop {
   padding: 1em;
   max-width: 550px;
-  margin: 0 auto;
-  color: #999;
+  margin: 2em auto;
   border: 1px dashed #999;
 
   &.active {
@@ -96,20 +95,5 @@ a:hover {
   20% {
     transform: scaleY(1);
     -webkit-transform: scaleY(1);
-  }
-}
-
-.footer {
-  margin-top: 5em;
-  font-size: 10pt;
-  color: #aaa;
-
-  p {
-    margin: 0.25em;
-  }
-
-  img {
-    margin: 2em;
-    max-height: 80px;
   }
 }

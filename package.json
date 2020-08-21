@@ -19,6 +19,7 @@
     "jquery": "^3.5.1",
     "metrics-graphics": "^2.15.6",
     "moment": "^2.27.0",
+    "normalize.css": "^8.0.1",
     "papaparse": "^5.2.0",
     "underscore": "^1.10.2"
   },
