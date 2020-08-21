@@ -2,13 +2,16 @@ body {
   font-family: sans-serif;
   font-size: 12pt;
   margin: 1em auto;
-  background: #EEE;
+  background: #eee;
   color: #555;
   text-align: center;
 }
 
-a, a:visited, a:active, a:hover {
-  color: #249FC1;
+a,
+a:visited,
+a:active,
+a:hover {
+  color: #249fc1;
   text-decoration: none;
 
   &:hover {
@@ -38,7 +41,7 @@ a, a:visited, a:active, a:hover {
   height: 20px;
 
   div {
-    background-color: #249FC1;
+    background-color: #249fc1;
     height: 100%;
     width: 6px;
     display: inline-block;
@@ -57,8 +60,8 @@ a, a:visited, a:active, a:hover {
   }
 
   .rect3 {
-    -webkit-animation-delay: -1.0s;
-    animation-delay: -1.0s;
+    -webkit-animation-delay: -1s;
+    animation-delay: -1s;
   }
 
   .rect4 {
@@ -73,30 +76,40 @@ a, a:visited, a:active, a:hover {
 }
 
 @-webkit-keyframes stretchdelay {
-  0%, 40%, 100% { -webkit-transform: scaleY(0.4) }
-  20% { -webkit-transform: scaleY(1.0) }
+  0%,
+  40%,
+  100% {
+    -webkit-transform: scaleY(0.4);
+  }
+  20% {
+    -webkit-transform: scaleY(1);
+  }
 }
 
 @keyframes stretchdelay {
-  0%, 40%, 100% {
+  0%,
+  40%,
+  100% {
     transform: scaleY(0.4);
     -webkit-transform: scaleY(0.4);
-  }  20% {
-    transform: scaleY(1.0);
-    -webkit-transform: scaleY(1.0);
+  }
+  20% {
+    transform: scaleY(1);
+    -webkit-transform: scaleY(1);
   }
 }
 
 .footer {
   margin-top: 5em;
   font-size: 10pt;
-  color: #AAA;
+  color: #aaa;
 
   p {
     margin: 0.25em;
   }
 
   img {
-    max-height: 100px;
+    margin: 2em;
+    max-height: 80px;
   }
 }
