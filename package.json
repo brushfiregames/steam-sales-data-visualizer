@@ -31,7 +31,7 @@
   },
   "scripts": {
     "start": "parcel app/index.html",
-    "build": "parcel build --no-source-maps app/index.html",
+    "build": "parcel build --no-source-maps --public-url /steam-sales-data-visualizer/ app/index.html",
     "deploy": "rimraf dist && node deploy.js"
   }
 }
